@@ -239,28 +239,22 @@ public class LibraryController {
 		}
 	}
 
-	@GetMapping("not_borrowed_books/{date}")
+	@GetMapping("not_borrowed_copies/{date}")
 	public ResponseEntity<Object> bookNotBorrowedAtDay(@PathVariable("date") String date){
 		try {
 			
-			String q = "WITH duplicated_copies AS\n"
+			String q = "SELECT *\n"
+					+ "FROM book_copy\n"
+					+ "JOIN book\n"
+					+ "ON book.id = book_id\n"
+					+ "JOIN author\n"
+					+ "ON book.author_id = author.id\n"
+					+ "WHERE book_copy.id NOT IN\n"
 					+ "(\n"
-					+ "	SELECT subquery.*, ROW_NUMBER() OVER(PARTITION BY book_id ORDER BY title) AS 'rn'\n"
-					+ "    FROM(\n"
-					+ "        SELECT book_copy.id as book_copy_id, book_id, title, first_publication_date, author_id, first_name, last_name, birth_date\n"
-					+ "        FROM rental\n"
-					+ "        JOIN book_copy\n"
-					+ "        ON book_copy.id = book_copy_id\n"
-					+ "        JOIN book\n"
-					+ "        ON book.id = book_id\n"
-					+ "        JOIN author\n"
-					+ "        ON book.author_id = author.id\n"
-					+ "		   WHERE start_date > '" + date + "' OR end_date < '" + date + "'"
-					+ "    ) subquery\n"
-					+ ")\n"
-					+ "SELECT *\n"
-					+ "FROM duplicated_copies\n"
-					+ "WHERE rn = 1";
+					+ "    SELECT book_copy_id\n"
+					+ "    FROM rental\n"
+					+ "    WHERE start_date <= '"+date+"' AND end_date >= '"+date+"'\n"
+					+ ");";
 			System.out.println(q);
 			ResultSet rs = db.query(q);
 			
