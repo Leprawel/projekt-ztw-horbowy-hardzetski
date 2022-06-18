@@ -258,7 +258,8 @@ public class LibraryController {
 	public ResponseEntity<Object> bookNotBorrowedAtDay(@PathVariable("date") String date){
 		try {
 			
-			String q = "SELECT *\n"
+			String q = "SELECT book_copy.id as book_copy_id, book.id as book_id, book.title, book.first_publication_date, "
+					+ "author.id as author_id, author.first_name, author.last_name, author.birth_date\n"
 					+ "FROM book_copy\n"
 					+ "JOIN book\n"
 					+ "ON book.id = book_id\n"
@@ -287,9 +288,9 @@ public class LibraryController {
 		try {
 			String q = "WITH duplicated_copies AS\n"
 					+ "(\n"
-					+ "	SELECT subquery.*, ROW_NUMBER() OVER(PARTITION BY id ORDER BY is_borrowed DESC) AS 'rn'\n"
+					+ "	SELECT subquery.*, ROW_NUMBER() OVER(PARTITION BY book_copy_id ORDER BY is_borrowed DESC) AS 'rn'\n"
 					+ "    FROM(\n"
-					+ "        SELECT book_copy.id, book_id, title, first_publication_date, author_id, first_name, last_name, birth_date, start_date, end_date, \n"
+					+ "        SELECT book_copy.id as book_copy_id, book_id, title, first_publication_date, author_id, first_name, last_name, birth_date, start_date, end_date, \n"
 					+ "        CASE\n"
 					+ "            WHEN start_date IS NULL OR start_date > '"+date+"' OR end_date < '"+date+"' THEN \"false\"\n"
 					+ "            ELSE \"true\"\n"
@@ -532,7 +533,7 @@ public class LibraryController {
 		      Map<String, Object> row = new HashMap<>();
 		      
 		      for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-		           String colName = rs.getMetaData().getColumnName(i);
+		           String colName = rs.getMetaData().getColumnLabel(i);
 		           Object colVal = rs.getObject(i);
 		           row.put(colName, colVal);
 		      }
