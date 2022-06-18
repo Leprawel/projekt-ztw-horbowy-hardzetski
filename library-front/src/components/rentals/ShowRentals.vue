@@ -1,6 +1,8 @@
 <template>
 
   <router-link style="" :to="{name: 'addRental'}" v-if="isLibrarian"><button>Add new rental</button></router-link>
+  <h3>Show active rentals</h3>
+  <Toggle v-model="showActive" @change="changeSource"/>
   <div id="show-rentals" >
     <rental-table :rentalsSource="rentals" v-if="isLibrarian || isManager"/>
     <h1 v-else>No permission</h1>
@@ -9,18 +11,28 @@
 
 <script>
 import RentalTable from '@/components/rentals/ListRentals.vue'
+import Toggle from '@vueform/toggle'
 
 export default {
   name: 'ShowRentals',
   components: {
     RentalTable,
+    Toggle,
   },
   data() {
     return {
-      rentals: []
+      rentals: [],
+      showActive: false
       }
     },
     methods: {
+      changeSource()
+      {
+        if(this.showActive)
+          this.getActiveRentals()
+        else
+          this.getRentals()
+      },
       async getRentals() {
         try {
         const response = await fetch('http://localhost:8080/rentals')
@@ -31,11 +43,21 @@ export default {
         console.error(error)
       }
     },
+
+    async getActiveRentals() {
+      try {
+        var today = new Date();
+        const response = await fetch('http://localhost:8080/active_rentals/'+today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate())
+        const data = await response.json()
+      console.log(data)
+      this.rentals = data
+      } catch (error) {
+      console.error(error)
+    }
+  },
   },
   mounted() {
     this.getRentals()
-    this.rentals = [{id: 4, bookCopyId: 2, readerId:2, startDate: '2012-05-06', finishDate: '2021-05-06', status: 0},
-                  {id: 5, bookCopyId: 42, readerId:22, startDate: '2015-05-02', finishDate: '2018-05-03', status: 0}]
   },
 
   computed: {

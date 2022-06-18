@@ -15,13 +15,13 @@
     </thead>
     <tbody>
       <tr v-for="bookCopy in bookCopiesSource" :key="bookCopy.id">
-        <td>{{ bookCopy.id }}</td>
+        <td>{{ bookCopy.book_copy_id }}</td>
         <td>{{ bookCopy.book_id }}</td>
         <td>{{ bookCopy.title }}</td>
         <td>{{ bookCopy.first_publication_date}}</td>
         <td>{{ bookCopy.is_borrowed != null? bookCopy.is_borrowed : false}}</td>
         <td v-if="isManager">
-            <button class = "btn btn-danger" @click="deleteBookCopy(bookCopy.id)">
+            <button class = "btn btn-danger" @click="deleteBookCopy(bookCopy.book_copy_id)">
               <i class="fas fa-trash-alt">Delete</i>
             </button>
         </td>
