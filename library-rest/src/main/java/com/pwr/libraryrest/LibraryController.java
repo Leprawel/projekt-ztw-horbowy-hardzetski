@@ -449,6 +449,21 @@ public class LibraryController {
 		}
 	}
 
+	@GetMapping("/rentals")
+	public ResponseEntity<Object> getRentals() {
+		try {
+			String q = "SELECT rental.id as rental_id, book_copy_id, book_id, reader_id, start_date, end_date, first_name, last_name, document_id, title, first_publication_date\n"
+					+ "FROM rental\n"
+					+ "JOIN reader ON rental.reader_id = reader.id\n"
+					+ "JOIN book_copy ON rental.book_copy_id = book_copy.id\n"
+					+ "JOIN book ON book_copy.book_id = book.id;";
+			ResultSet rs = db.query(q);
+			return ResponseEntity.ok().body(rsToJson(rs));
+		}
+		catch(Exception e){
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	
 	// USER CRUD
