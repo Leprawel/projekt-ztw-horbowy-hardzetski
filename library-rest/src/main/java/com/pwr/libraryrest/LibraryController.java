@@ -37,6 +37,7 @@ public class LibraryController {
 	
 
 	// AUTHOR CRUD
+	@CrossOrigin
 	@PostMapping("/author")
 	public ResponseEntity<Object> postAuthor(@RequestBody Author author){
 		try {
@@ -51,6 +52,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@GetMapping("/author/{id}")
 	public ResponseEntity<Object> getAuthor(@PathVariable("id") String id) {
 		try {
@@ -61,6 +63,7 @@ public class LibraryController {
 		}
 	}
 	
+	@CrossOrigin
 	@PutMapping("/author")
 	public ResponseEntity<Object> putAuthor(@RequestBody Author author){
 		try {
@@ -75,6 +78,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@DeleteMapping("/author/{id}")
 	public ResponseEntity<Object> deleteAuthor(@PathVariable("id") String id){
 		try {
@@ -89,6 +93,7 @@ public class LibraryController {
 	}
 
 	// ALL AUTHORS
+	@CrossOrigin
 	@GetMapping("/authors")
 	public ResponseEntity<Object> getAuthors() {
 		try {
@@ -107,6 +112,7 @@ public class LibraryController {
 	
 	
 	// BOOK CRUD
+	@CrossOrigin
 	@PostMapping("/book")
 	public ResponseEntity<Object> postBook(@RequestBody Book book){
 		try {
@@ -121,6 +127,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@GetMapping("/book/{id}")
 	public ResponseEntity<Object> getBookById(@PathVariable("id") String id) {
 		try {
@@ -131,6 +138,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@PutMapping("/book")
 	public ResponseEntity<Object> putBook(@RequestBody Book book){
 		try {
@@ -145,6 +153,7 @@ public class LibraryController {
 		}
 	}
 	
+	@CrossOrigin
 	@DeleteMapping("/book/{id}")
 	public ResponseEntity<Object> deleteBook(@PathVariable("id") String id){
 		try {
@@ -159,6 +168,7 @@ public class LibraryController {
 	}
 
 	// ALL BOOKS
+	@CrossOrigin
 	@GetMapping("/books")
 	public ResponseEntity<Object> getBooks() {
 		try {
@@ -175,6 +185,7 @@ public class LibraryController {
 	}
 	
 	// ALL BOOKS WITH AUTHORS
+	@CrossOrigin
 	@GetMapping("/books_with_authors")
 	public ResponseEntity<Object> getBooksWithAuthors(){
 		try {
@@ -202,6 +213,7 @@ public class LibraryController {
 	
 	
 	// BOOK_COPY CRD (no update)
+	@CrossOrigin
 	@PostMapping("/book_copy")
 	public ResponseEntity<Object> postBookCopy(@RequestBody BookCopy book_copy){
 		try {
@@ -216,6 +228,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@GetMapping("/book_copy/{id}")
 	public ResponseEntity<Object> getBookCopyById(@PathVariable("id") String id) {
 		try {
@@ -226,6 +239,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@DeleteMapping("/book_copy/{id}")
 	public ResponseEntity<Object> deleteBookCopy(@PathVariable("id") String id){
 		try {
@@ -239,6 +253,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@GetMapping("not_borrowed_copies/{date}")
 	public ResponseEntity<Object> bookNotBorrowedAtDay(@PathVariable("date") String date){
 		try {
@@ -266,6 +281,7 @@ public class LibraryController {
 		}
 	}
 	
+	@CrossOrigin
 	@GetMapping("all_book_copies/{date}")
 	public ResponseEntity<Object> allBookCopiesWithAllData(@PathVariable("date") String date){
 		try {
@@ -302,6 +318,7 @@ public class LibraryController {
 	}
 	
 	// READER CRUD
+	@CrossOrigin
 	@PostMapping("/reader")
 	public ResponseEntity<Object> postReader(@RequestBody Reader reader){
 		try {
@@ -316,6 +333,7 @@ public class LibraryController {
 		}
 	}
 	
+	@CrossOrigin
 	@GetMapping("/reader/{id}")
 	public ResponseEntity<Object> getReader(@PathVariable("id") String id) {
 		try {
@@ -326,6 +344,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@PutMapping("/reader")
 	public ResponseEntity<Object> putReader(@RequestBody Reader reader){
 		try {
@@ -340,6 +359,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@DeleteMapping("/reader/{id}")
 	public ResponseEntity<Object> deleteReader(@PathVariable("id") String id){
 		try {
@@ -354,6 +374,7 @@ public class LibraryController {
 	}
 
 	// ALL READERS
+	@CrossOrigin
 	@GetMapping("/readers")
 	public ResponseEntity<Object> getReaders() {
 		try {
@@ -372,6 +393,7 @@ public class LibraryController {
 	
 	
 	// RENTAL CRUD
+	@CrossOrigin
 	@PostMapping("/rental")
 	public ResponseEntity<Object> postRental(@RequestBody Rental rental){
 		try {
@@ -386,6 +408,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@GetMapping("/rental/{id}")
 	public ResponseEntity<Object> getRental(@PathVariable("id") String id) {
 		try {
@@ -396,6 +419,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@PutMapping("/rental")
 	public ResponseEntity<Object> putRental(@RequestBody Rental rental){
 		try {
@@ -410,6 +434,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@DeleteMapping("/rental/{id}")
 	public ResponseEntity<Object> deleteRental(@PathVariable("id") String id){
 		try {
@@ -426,6 +451,7 @@ public class LibraryController {
 	
 	
 	// USER CRUD
+	@CrossOrigin
 	@PostMapping("/user")
 	public ResponseEntity<Object> postUser(@RequestBody User user){
 		try {
@@ -440,6 +466,7 @@ public class LibraryController {
 		}
 	}
 	
+	@CrossOrigin
 	@GetMapping("/user/{id}")
 	public ResponseEntity<Object> getUser(@PathVariable("id") String id) {
 		try {
@@ -450,6 +477,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@PutMapping("/user")
 	public ResponseEntity<Object> putUser(@RequestBody User user){
 		try {
@@ -464,6 +492,7 @@ public class LibraryController {
 		}
 	}
 
+	@CrossOrigin
 	@DeleteMapping("/user/{id}")
 	public ResponseEntity<Object> deleteUser(@PathVariable("id") String id){
 		try {
@@ -478,13 +507,14 @@ public class LibraryController {
 	}
 
 	// USER LOGIN PASSWORD CHECK
-	@GetMapping("/user_password_check")
+	@CrossOrigin
+	@PostMapping("/user_password_check")
 	public ResponseEntity<Object> getUserPasswordCheck(@RequestBody User user) {
 		try {
 			ResultSet result = db.query("SELECT * FROM `user` WHERE username LIKE'"+user.username
 					+"' AND password LIKE '"+user.password+"'");
 			if(result.first()) {
-				return ResponseEntity.ok().body(User.fromResultSet(result, false).username);
+				return ResponseEntity.ok().body(User.fromResultSet(result, false));
 			}
 			else {
 				return ResponseEntity.ok().body("");
