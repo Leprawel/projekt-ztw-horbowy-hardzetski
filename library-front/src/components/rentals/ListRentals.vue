@@ -59,7 +59,7 @@
         try {
         console.log('Query to serv')
         await fetch('http://localhost:8080/rental/' + id, {method: "DELETE"} )
-        this.$parent.getRentals()
+        this.$parent.changeSource()
         } catch (error) {
         console.error(error)
       }

@@ -28,16 +28,18 @@ export default {
     methods: {
       changeSource()
       {
+        console.log('State')
+          console.log(this.showActive)
         if(this.showActive)
           this.getActiveRentals()
         else
           this.getRentals()
       },
+
       async getRentals() {
         try {
         const response = await fetch('http://localhost:8080/rentals')
         const data = await response.json()
-        console.log(data)
         this.rentals = data
         } catch (error) {
         console.error(error)

@@ -31,7 +31,7 @@ export default {
       try {
       const response = await fetch('http://localhost:8080/book_copy/', {method: "POST", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(bookCopyAdd)})
       if(response.ok)
-        this.$parent.getBookCopies()
+        this.$parent.changeSource()
       else
       {
         this.errorMSG = await response.text()
