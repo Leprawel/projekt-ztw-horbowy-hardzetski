@@ -1,28 +1,53 @@
-
 <template>
+  <div>
+    <Nav :navLinks="navLinks" :navConfig="navConfig" :btnConfig="btnConfig">
+      <div class = "login-wrapper">
+        <h3 v-if="isLogedIn" style="color: white;">Welcome, {{this.login}}! <button @click="logout()">Log out </button></h3>
+        <h3 style="color: white;" v-else>Not logged in <router-link to="/login"><button>Log in</button></router-link></h3>
+      </div>
+      <img class="img" src="logo" alt="" srcset="" /> <!-- A slot For your project Logo -->
+    </Nav>
+  </div>
+  <div class = "contents-container">
 
-  <h1 v-if="isLogedIn">Welcome, {{this.login}}! <button @click="logout()">Log out </button></h1>
-  <h1 v-else>Not logged in <router-link to="/login"><button>Log in</button></router-link></h1>
-  <nav>
-  <ul>
-    <li><router-link to="/bookCopies">BooksCopies</router-link></li>
-    <li v-if="isLogedIn"><router-link to="/books">Books</router-link></li>
-    <li v-if="isLogedIn"><router-link to="/readers">Readers</router-link></li>
-    <li v-if="isLogedIn"><router-link to="/rentals">Rentals</router-link></li>
-  </ul>
-  </nav>
-  <router-view> </router-view>
+
+    <router-view> </router-view>
+  </div>
 
 </template>
 
 <script>
+import Nav from "vue-nav-ui"
 
 export default {
   name: 'App',
+  components: {
+    Nav
+  },
   data() {
     return {
       login:'',
-      role:''
+      role:'',
+      /* FOR YOUR NAVIGATION LINKING NAMES AND PATHS */
+            navLinks: [],
+            navConfig: {
+                whitespace: false, /* GIVES PADDING TO YOUR NAV, IF SET TO FALSE, REMOVES PADDING */
+                navBg: "#074d20", /* BACKGROUND COLOR OF YOUR NAV  */
+                navBorderRadius: "30px", /* BORDER RADIUS OF YOUR NAV */
+                linkFont: "poppins", /* FONT FAMILY OF YOUR NAV */
+                linkColor: "white", /* FONT COLOR OF YOUR NAV */
+                responsivePosition: "top or bottom", /* FOR CHANGING THE POSITION OF YOUR NAV WHEN RESPONSIVE. BOTTOM or TOP | The only two options */
+            },
+            btnConfig: {
+                btnLink: false, /* FOR INITIALIZING NAV BUTTON USAGE, IF SET TO FALSE, REMOVES THE NAV BUTTON  */
+                btnUrl: "https://dhaniel.disha.page", /* LINK URL OF YOUR NAV BUTTON */
+                btnText: "Download app", /* NAV BUTTON TEXT */
+                btnBg: "#40269E", /* BACKGROUND COLOR OF YOUR NAV BUTTON  */
+                btnTextColor: "white", /* FONT COLOR OF YOUR NAV BUTTON*/
+                btnBorderWidth: "0", /* BORDER WIDTH OF YOUR NAV BUTTON */
+                btnBorderColor: "black", /* BORDER COLOR OF YOUR NAV BUTTON */
+                btnBorderRadius: "20px", /* BORDER RADIUS OF YOUR NAV BUTTON */
+            }
     }
   },
   computed: {
@@ -41,7 +66,7 @@ export default {
       localStorage.removeItem('login')
       localStorage.removeItem('role')
       await this.$auth.signOut()
-      this.$router.go()
+      this.$router.push('/');
     },
     async refreshUserSSO()
     {
@@ -56,7 +81,51 @@ export default {
     this.login = localStorage.getItem('login')
     this.role = localStorage.getItem('role')
     this.refreshUserSSO()
-  }
+
+    if(this.isLogedIn)
+    {
+      this.navLinks = [
+          {
+              name: "Home",
+              path: "/",
+          },
+          {
+              name: "Book Copies",
+              path: "/bookCopies",
+          },
+          {
+              name: "Authors",
+              path: "/authors",
+          },
+          {
+              name: "Books",
+              path: "/books",
+          },
+          {
+              name: "Readers",
+              path: "/readers",
+          },
+          {
+              name: "Rentals",
+              path: "/rentals",
+          },
+      ]
+    }
+    else
+    {
+      this.navLinks = [
+          {
+              name: "Home",
+              path: "/",
+          },
+          {
+              name: "Book Copies",
+              path: "/bookCopies",
+          },
+      ]
+    }
+  },
+
 }
 </script>
 
@@ -73,8 +142,19 @@ button {
 background: #009435;
 border: 1px solid #009435;
 }
-.small-container {
-max-width: 680px;
+.contents-container {
+max-width: 980px;
+margin: auto;
+}
+
+.login-wrapper {
+  display: flex;
+  /*We want 1 row and we dont want items to wrap into other rows*/
+  flex-flow: row nowrap;
+  /*Positions elements to the start, end and whatever is between while keeping some space between them */
+  justify-content: space-between;
+  /*You can add this if you also want to horizontally align items*/
+  align-items: center;
 }
 
 </style>

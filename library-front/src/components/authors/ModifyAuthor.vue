@@ -1,30 +1,30 @@
 
 <template>
-  <div id="modify-book" >
+  <div id="modify-author" >
     <h1 v-if="isManager">Modify</h1>
     <h1 v-else>No permission</h1>
-    <book-form-mod :bookDetOrId = "bookDetOrId" @modify:bookDet="modifyBookDet" v-if="isManager"/>
+    <author-form-mod :authorOrId = "authorOrId" @modify:author="modifyAuthor" v-if="isManager"/>
   </div>
 </template>
 
 <script>
-import BookFormMod from '@/components/books/BookFormMod.vue'
+import AuthorFormMod from '@/components/authors/AuthorFormMod.vue'
 
 export default {
-  name: 'ModifyBook',
+  name: 'ModifyAuthor',
   components: {
-    BookFormMod,
+    AuthorFormMod,
   },
   data() {
     return {
-      bookDetOr: {}
+      authorOrId: {}
       }
     },
     methods: {
-  async modifyBookDet(bookDet) {
+  async modifyAuthor(author) {
     console.log('Query to serv')
     try {
-    await fetch('http://localhost:8080/book/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(bookDet)})
+    await fetch('http://localhost:8080/author/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(author)})
     } catch (error) {
     console.error(error)
   }
@@ -32,7 +32,7 @@ export default {
   },
 
   created() {
-    this.bookDetOrId = this.$route.params.bookId
+    this.authorOrId = this.$route.params.authorId
   },
 
   computed: {

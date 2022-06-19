@@ -1,40 +1,30 @@
 
 <template>
-  <div id="modify-book" >
-    <h1 v-if="isManager">Modify</h1>
+  <div id="add-book" >
+    <h1 v-if="isManager">Add</h1>
     <h1 v-else>No permission</h1>
-    <book-form-mod :bookDetOrId = "bookDetOrId" @modify:bookDet="modifyBookDet" v-if="isManager"/>
+    <add-author-form @add:authorAdd="addAuthor" v-if="isManager"/>
+
   </div>
 </template>
 
 <script>
-import BookFormMod from '@/components/books/BookFormMod.vue'
+import AddAuthorForm from '@/components/authors/AddAuthorForm.vue'
 
 export default {
-  name: 'ModifyBook',
+  name: 'AddAuthor',
   components: {
-    BookFormMod,
+    AddAuthorForm,
   },
-  data() {
-    return {
-      bookDetOr: {}
-      }
-    },
     methods: {
-  async modifyBookDet(bookDet) {
-    console.log('Query to serv')
-    try {
-    await fetch('http://localhost:8080/book/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(bookDet)})
-    } catch (error) {
-    console.error(error)
-  }
+    async addAuthor(authorAdd) {
+      try {
+      await fetch('http://localhost:8080/author/', {method: "POST", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(authorAdd)})
+      } catch (error) {
+      console.error(error)
+    }
   },
   },
-
-  created() {
-    this.bookDetOrId = this.$route.params.bookId
-  },
-
   computed: {
     isLogedIn(){
       return localStorage.getItem('login') != null

@@ -1,40 +1,41 @@
 
 <template>
-  <div id="modify-book" >
-    <h1 v-if="isManager">Modify</h1>
+
+  <router-link style="" :to="{name: 'addAuthor'}" v-if="isManager"><button>Add new author</button></router-link>
+  <div id="show-authors" >
+    <author-table :authorsSource="authors" v-if="isLibrarian || isManager"/>
     <h1 v-else>No permission</h1>
-    <book-form-mod :bookDetOrId = "bookDetOrId" @modify:bookDet="modifyBookDet" v-if="isManager"/>
   </div>
 </template>
 
 <script>
-import BookFormMod from '@/components/books/BookFormMod.vue'
+import AuthorTable from '@/components/authors/ListAuthors.vue'
 
 export default {
-  name: 'ModifyBook',
+  name: 'ShowAuthors',
   components: {
-    BookFormMod,
+    AuthorTable,
   },
   data() {
     return {
-      bookDetOr: {}
+      authors: []
       }
     },
     methods: {
-  async modifyBookDet(bookDet) {
-    console.log('Query to serv')
-    try {
-    await fetch('http://localhost:8080/book/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(bookDet)})
-    } catch (error) {
-    console.error(error)
-  }
+      async getAuthors() {
+        try {
+        const response = await fetch('http://localhost:8080/authors', {method: 'GET'})
+        const data = await response.json()
+        console.log(data)
+        this.authors = data
+        } catch (error) {
+        console.error(error)
+      }
+    },
   },
+  mounted() {
+    this.getAuthors()
   },
-
-  created() {
-    this.bookDetOrId = this.$route.params.bookId
-  },
-
   computed: {
     isLogedIn(){
       return localStorage.getItem('login') != null

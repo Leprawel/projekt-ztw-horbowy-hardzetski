@@ -78,7 +78,7 @@ export default {
       {
         localStorage.setItem('login', loginData.username)
         localStorage.setItem('role', loginData.role)
-        this.$router.go()
+        this.$router.go();
       }
     },
 

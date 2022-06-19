@@ -11,6 +11,10 @@ import ShowRentals from '@/components/rentals/ShowRentals.vue'
 import ModifyRental from '@/components/rentals/ModifyRental.vue'
 import AddRental from '@/components/rentals/AddRental.vue'
 
+import ShowAuthors from '@/components/authors/ShowAuthors.vue'
+import ModifyAuthor from '@/components/authors/ModifyAuthor.vue'
+import AddAuthor from '@/components/authors/AddAuthor.vue'
+
 
 import LoginForm from '@/components/login/LoginForm.vue'
 
@@ -25,12 +29,19 @@ export default
     {path:'/bookCopies', name: 'bookCopies', component: ShowBookCopies},
     {path:'/updateBook/:bookId', name:"updateBook", component: ModifyBook},
     {path:'/addBook', name:"addBook", component: AddBook},
+
+    {path:'/authors', component: ShowAuthors},
+    {path:'/updateAuthor/:authorId', name:"updateAuthor", component: ModifyAuthor},
+    {path:'/addAuthor', name:"addAuthor", component: AddAuthor},
+
     {path:'/readers', component: ShowReaders},
     {path:'/updateReader/:readerId', name:"updateReader", component: ModifyReader},
     {path:'/addReader', name:"addReader", component: AddReader},
+
     {path:'/rentals', component: ShowRentals},
     {path:'/updateRental/:rentalId', name:"updateRental", component: ModifyRental},
     {path:'/addRental', name:"addRental", component: AddRental},
+
     {path:'/login', name:"login", component: LoginForm},
     {path:'/login/callback', name: 'callback', component: LoginCallback},
 ]

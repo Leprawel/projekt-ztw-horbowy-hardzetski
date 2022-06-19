@@ -1,8 +1,8 @@
 <template>
 
   <router-link style="" :to="{name: 'addRental'}" v-if="isLibrarian"><button>Add new rental</button></router-link>
-  <h3>Show active rentals</h3>
-  <Toggle v-model="showActive" @change="changeSource"/>
+  <h3 v-if="isLibrarian || isManager">Show active rentals</h3>
+  <Toggle v-model="showActive" @change="changeSource" v-if="isLibrarian || isManager"/>
   <div id="show-rentals" >
     <rental-table :rentalsSource="rentals" v-if="isLibrarian || isManager"/>
     <h1 v-else>No permission</h1>
