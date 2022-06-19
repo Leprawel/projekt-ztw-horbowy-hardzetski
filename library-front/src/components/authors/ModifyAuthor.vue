@@ -3,7 +3,14 @@
   <div id="modify-author" >
     <h1 v-if="isManager">Modify</h1>
     <h1 v-else>No permission</h1>
-    <author-form-mod :authorOrId = "authorOrId" @modify:author="modifyAuthor" v-if="isManager"/>
+
+    <div style="display: none" class="alert" id="errorbox">
+     <span></span>
+     Error:
+     <span v-text="this.errorMSG"></span>
+    </div>
+
+    <author-form-mod class="form-container"  :authorOrId = "authorOrId" @modify:author="modifyAuthor" v-if="isManager"/>
   </div>
 </template>
 
@@ -17,14 +24,21 @@ export default {
   },
   data() {
     return {
-      authorOrId: {}
+      authorOrId: {},
+        errorMSG:'',
       }
     },
     methods: {
   async modifyAuthor(author) {
+    document.getElementById("errorbox").style.display = "none"
     console.log('Query to serv')
     try {
-    await fetch('http://localhost:8080/author/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(author)})
+    const response = await fetch('http://localhost:8080/author/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(author)})
+    if(!response.ok)
+    {
+      this.errorMSG = await response.text()
+      document.getElementById("errorbox").style.display = "block"
+    }
     } catch (error) {
     console.error(error)
   }

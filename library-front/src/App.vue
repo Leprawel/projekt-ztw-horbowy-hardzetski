@@ -3,13 +3,13 @@
     <Nav :navLinks="navLinks" :navConfig="navConfig" :btnConfig="btnConfig">
       <div class = "login-wrapper">
         <h3 v-if="isLogedIn" style="color: white;">Welcome, {{this.login}}! <button @click="logout()">Log out </button></h3>
-        <h3 style="color: white;" v-else>Not logged in <router-link to="/login"><button>Log in</button></router-link></h3>
+        <h3 style="color: white;" v-else>Not logged in <router-link to="/login"><button>Log in</button></router-link> <router-link to="/register"><button>Register</button></router-link></h3>
       </div>
       <img class="img" src="logo" alt="" srcset="" /> <!-- A slot For your project Logo -->
     </Nav>
   </div>
   <div class = "contents-container">
-
+  <h1></h1>
 
     <router-view> </router-view>
   </div>
@@ -147,6 +147,11 @@ max-width: 980px;
 margin: auto;
 }
 
+.form-container {
+max-width: 680px;
+margin: auto;
+}
+
 .login-wrapper {
   display: flex;
   /*We want 1 row and we dont want items to wrap into other rows*/
@@ -156,5 +161,28 @@ margin: auto;
   /*You can add this if you also want to horizontally align items*/
   align-items: center;
 }
+/* The alert message box */
+.alert {
+ padding: 20px;
+ background-color: #f44336; /* Red */
+ color: white;
+ margin-bottom: 15px;
+}
 
+/* The close button */
+.closebtn {
+ margin-left: 15px;
+ color: white;
+ font-weight: bold;
+ float: right;
+ font-size: 22px;
+ line-height: 20px;
+ cursor: pointer;
+ transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+ color: black;
+}
 </style>

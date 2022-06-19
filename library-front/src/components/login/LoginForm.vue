@@ -1,5 +1,5 @@
 <template>
-  <div id="add-book-form">
+  <div id="add-book-form" class="form-container" >
     <form @submit.prevent="loginAttempt" v-if="notLoggedIn">
 
       <label>Username</label>
@@ -15,7 +15,7 @@
       @keypress="clearStatus"/>
 
       <p v-if="error && submitting" class="error-message">
-      Proszę wypełnić wskazane pola formularza
+      Please enter correct data in fields
       </p>
 
       <p v-if="failedLogin" class="error-message">

@@ -27,10 +27,10 @@
       @keypress="clearStatus"/>
 
       <p v-if="error && submitting" class="error-message">
-      Proszę wypełnić wskazane pola formularza
+      Please enter correct data in fields
       </p>
       <p v-if="success" class="success-message">
-      Dane poprawnie zapisano
+      Data was sent to the database
       </p>
 
       <button id="submit">Modify</button>

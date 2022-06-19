@@ -3,7 +3,15 @@
   <div id="add-book" >
     <h1 v-if="isManager">Add</h1>
     <h1 v-else>No permission</h1>
-    <add-book-form @add:bookAdd="addBookDet" v-if="isManager"/>
+
+    <div style="display: none" class="alert" id="errorbox">
+     <span></span>
+     Error:
+     <span v-text="this.errorMSG"></span>
+    </div>
+
+
+    <add-book-form class="form-container"  @add:bookAdd="addBookDet" v-if="isManager"/>
 
   </div>
 </template>
@@ -16,10 +24,21 @@ export default {
   components: {
     AddBookForm,
   },
+  data() {
+    return {
+      errorMSG:'',
+    }
+  },
     methods: {
     async addBookDet(bookAdd) {
+      document.getElementById("errorbox").style.display = "none"
       try {
-      await fetch('http://localhost:8080/book/', {method: "POST", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(bookAdd)})
+      const response = await fetch('http://localhost:8080/book/', {method: "POST", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(bookAdd)})
+      if(!response.ok)
+      {
+        this.errorMSG = await response.text()
+        document.getElementById("errorbox").style.display = "block"
+      }
       } catch (error) {
       console.error(error)
     }

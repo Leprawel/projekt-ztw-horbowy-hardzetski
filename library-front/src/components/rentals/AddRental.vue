@@ -3,7 +3,14 @@
   <div id="add-rental" >
     <h1 v-if="isLibrarian">Add</h1>
     <h1 v-else>No permission</h1>
-    <add-rental-form @add:rentalAdd="addRental" v-if="isLibrarian"/>
+
+    <div style="display: none" class="alert" id="errorbox">
+     <span></span>
+     Error:
+     <span v-text="this.errorMSG"></span>
+    </div>
+
+    <add-rental-form class="form-container"  @add:rentalAdd="addRental" v-if="isLibrarian"/>
   </div>
 </template>
 
@@ -15,10 +22,22 @@ export default {
   components: {
     AddRentalForm,
   },
+  data() {
+    return {
+      readerOrId: {},
+        errorMSG:'',
+      }
+    },
     methods: {
     async addRental(rentalAdd) {
+      document.getElementById("errorbox").style.display = "none"
       try {
-        await fetch('http://localhost:8080/rental/', {method: "POST", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(rentalAdd)})
+        const response = await fetch('http://localhost:8080/rental/', {method: "POST", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(rentalAdd)})
+        if(!response.ok)
+        {
+          this.errorMSG = await response.text()
+          document.getElementById("errorbox").style.display = "block"
+        }
         } catch (error) {
       console.error(error)
     }

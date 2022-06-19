@@ -3,7 +3,14 @@
   <div id="modify-reader" >
     <h1 v-if="isLibrarian">Modify</h1>
     <h1 v-else>No permission</h1>
-    <reader-form-mod :readerOrId = "readerOrId" @modify:reader="modifyReader" v-if="isLibrarian"/>
+
+    <div style="display: none" class="alert" id="errorbox">
+     <span></span>
+     Error:
+     <span v-text="this.errorMSG"></span>
+    </div>
+
+    <reader-form-mod class="form-container"  :readerOrId = "readerOrId" @modify:reader="modifyReader" v-if="isLibrarian"/>
   </div>
 </template>
 
@@ -17,14 +24,21 @@ export default {
   },
   data() {
     return {
-      readerOrId: {}
+      readerOrId: {},
+        errorMSG:'',
       }
     },
     methods: {
   async modifyReader(reader) {
+    document.getElementById("errorbox").style.display = "none"
     console.log('Query to serv')
     try {
-    await fetch('http://localhost:8080/reader/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(reader)})
+    const response = await fetch('http://localhost:8080/reader/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(reader)})
+    if(!response.ok)
+    {
+      this.errorMSG = await response.text()
+      document.getElementById("errorbox").style.display = "block"
+    }
     } catch (error) {
     console.error(error)
   }

@@ -1,24 +1,28 @@
 
 <template>
-  <div id="add-book" >
-    <h1 v-if="isManager">Add</h1>
+  <div id="add-user" >
+    <h1 v-if="!isLogedIn">Add</h1>
     <h1 v-else>No permission</h1>
+
     <div style="display: none" class="alert" id="errorbox">
      <span></span>
      Error:
      <span v-text="this.errorMSG"></span>
     </div>
-    <add-book-copy-form class="form-container"  @add:bookCopyAdd="addBookCopy" v-if="isManager"/>
+
+
+    <add-user-form class="form-container" @add:userAdd="addUser" v-if="!isLogedIn"/>
+
   </div>
 </template>
 
 <script>
-import AddBookCopyForm from '@/components/books/AddBookCopyForm.vue'
+import AddUserForm from '@/components/login/AddUserForm.vue'
 
 export default {
-  name: 'AddBookCopy',
+  name: 'AddUser',
   components: {
-    AddBookCopyForm,
+    AddUserForm,
   },
   data() {
     return {
@@ -26,20 +30,17 @@ export default {
     }
   },
     methods: {
-    async addBookCopy(bookCopyAdd) {
+    async addUser(userAdd) {
       document.getElementById("errorbox").style.display = "none"
       try {
-      const response = await fetch('http://localhost:8080/book_copy/', {method: "POST", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(bookCopyAdd)})
-      if(response.ok)
-        this.$parent.getBookCopies()
-      else
+      const response = await fetch('http://localhost:8080/user/', {method: "POST", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(userAdd)})
+      if(!response.ok)
       {
         this.errorMSG = await response.text()
         document.getElementById("errorbox").style.display = "block"
       }
       } catch (error) {
       console.error(error)
-
     }
   },
   },

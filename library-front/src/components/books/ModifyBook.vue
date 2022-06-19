@@ -3,7 +3,14 @@
   <div id="modify-book" >
     <h1 v-if="isManager">Modify</h1>
     <h1 v-else>No permission</h1>
-    <book-form-mod :bookDetOrId = "bookDetOrId" @modify:bookDet="modifyBookDet" v-if="isManager"/>
+
+    <div style="display: none" class="alert" id="errorbox">
+     <span></span>
+     Error:
+     <span v-text="this.errorMSG"></span>
+    </div>
+
+    <book-form-mod class="form-container"  :bookDetOrId = "bookDetOrId" @modify:bookDet="modifyBookDet" v-if="isManager"/>
   </div>
 </template>
 
@@ -17,14 +24,21 @@ export default {
   },
   data() {
     return {
-      bookDetOr: {}
+      bookDetOr: {},
+        errorMSG:'',
       }
     },
     methods: {
   async modifyBookDet(bookDet) {
+    document.getElementById("errorbox").style.display = "none"
     console.log('Query to serv')
     try {
-    await fetch('http://localhost:8080/book/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(bookDet)})
+    const response = await fetch('http://localhost:8080/book/', {method: "PUT", headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(bookDet)})
+    if(!response.ok)
+    {
+      this.errorMSG = await response.text()
+      document.getElementById("errorbox").style.display = "block"
+    }
     } catch (error) {
     console.error(error)
   }

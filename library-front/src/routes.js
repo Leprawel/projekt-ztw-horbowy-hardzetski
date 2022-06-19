@@ -17,6 +17,7 @@ import AddAuthor from '@/components/authors/AddAuthor.vue'
 
 
 import LoginForm from '@/components/login/LoginForm.vue'
+import AddUser from '@/components/login/AddUser.vue'
 
 import { LoginCallback } from '@okta/okta-vue/'
 
@@ -44,4 +45,5 @@ export default
 
     {path:'/login', name:"login", component: LoginForm},
     {path:'/login/callback', name: 'callback', component: LoginCallback},
+    {path:'/register', name:"register", component: AddUser},
 ]

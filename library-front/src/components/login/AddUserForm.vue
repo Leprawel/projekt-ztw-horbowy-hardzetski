@@ -1,23 +1,28 @@
 <template>
   <div id="add-book-form">
     <form @submit.prevent="handleSubmit">
-      <label>Readers name</label>
-      <input type="text" v-model="readerAdd.first_name"
-      :class="{ 'has-error': submitting && invalidName }"
+      <label>Username</label>
+      <input type="text" v-model="userAdd.username"
+      :class="{ 'has-error': submitting && invalidUsername }"
       @focus="clearStatus"
       @keypress="clearStatus"/>
 
-      <label>Readers surname</label>
-      <input type="text" v-model="readerAdd.last_name"
-      :class="{ 'has-error': submitting && invalidSurname }"
+      <label>Password</label>
+      <input type="text" v-model="userAdd.password"
+      :class="{ 'has-error': submitting && invalidPassword }"
       @focus="clearStatus"
       @keypress="clearStatus"/>
 
-      <label>Readers document id</label>
-      <input type="text" v-model="readerAdd.document_id"
-      :class="{ 'has-error': submitting && invalidDocumentId }"
+
+      <label>Role</label>
+      <select name="roles" id="role"
+      v-model="userAdd.role"
+      :class="{ 'has-error': submitting && invalidRole }"
       @focus="clearStatus"
-      @keypress="clearStatus"/>
+      @keypress="clearStatus">
+        <option value="manager">manager</option>
+        <option value="librarian">librarian</option>
+      </select>
 
       <p v-if="error && submitting" class="error-message">
       Please enter correct data in fields
@@ -33,16 +38,16 @@
 
 <script>
 export default {
-  name: 'AddReaderForm',
+  name: 'AddBookForm',
   data() {
     return {
       submitting: false,
       error: false,
       success: false,
-      readerAdd: {
-      first_name: '',
-      last_name: '',
-      document_id: '',
+      userAdd: {
+      username: '',
+      password: '',
+      role: '',
       },
     }
   },
@@ -53,17 +58,19 @@ export default {
     this.submitting = true
     this.clearStatus()
     //check form fields
-    if (this.invalidName || this.invalidSurname || this.invalidDocumentId) {
+    if (this.invalidUsername || this.invalidPassword || this.invalidRole) {
     this.error = true
     return
     }
 
-    this.$emit('add:readerAdd', this.readerAdd)
+    console.log(this.userAdd)
+
+    this.$emit('add:userAdd', this.userAdd)
     //clear form fields
-    this.readerAdd = {
-      name: '',
-      surname: '',
-      documentId: '',
+    this.userAdd = {
+    username: '',
+    password: '',
+    role: '',
     },
     this.error = false
     this.success = true
@@ -74,16 +81,22 @@ export default {
     this.success = false
     this.error = false
     },
+
+    setSelected(value)
+    {
+        console.log('select changed')
+            console.log(value)
+    },
   },
   computed: {
-    invalidName(){
-      return this.readerAdd.first_name === ''
+    invalidUsername(){
+      return this.userAdd.username === ''
     },
-    invalidSurname(){
-      return this.readerAdd.last_name === ''
+    invalidPassword(){
+      return this.userAdd.password === ''
     },
-    invalidDocumentId(){
-      return this.readerAdd.document_id === ''
+    invalidRole(){
+      return this.userAdd.role === ''
     },
   },
 }

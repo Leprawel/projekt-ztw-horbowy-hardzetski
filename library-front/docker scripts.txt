@@ -1,0 +1,5 @@
+Create image
+docker build -t vuejs-library/dockerize-vuejs-app .
+
+Run image
+docker run -it -p 8081:8080 --rm --name dockerize-vuejs-app-1 vuejs-library/dockerize-vuejs-app
